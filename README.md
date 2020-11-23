@@ -29,7 +29,7 @@ For a simple installation and configuration, there is no mandatory variable.
         timeout: 5s
         schedule: '@every 10s'
         urls:
-          - "https://www.google.com.br"
+          - "https://www.google.com"
 
   roles:
     - role: ansible-role-heartbeat
