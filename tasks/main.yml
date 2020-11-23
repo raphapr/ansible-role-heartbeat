@@ -1,0 +1,25 @@
+---
+- name: install heartbeat (Debian)
+  apt:
+    name: "{{ heartbeat_pkg_url }}.deb"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: install heartbeat (Red Hat Like)
+  yum:
+    name: "{{ heartbeat_pkg_url }}.rpm"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+# http://docs.ansible.com/ansible/latest/template_module.html
+- name: parse config file
+  template:
+    src: "heartbeat.yml.j2"
+    dest: "{{ heartbeat_config_dir }}/{{ heartbeat_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart heartbeat
+
+- name: Ensure heartbeat service starts
+  service:
+    name: "{{ heartbeat_service_name }}"
+    enabled: true
