@@ -1,0 +1,34 @@
+---
+heartbeat_version: 7.10.0
+heartbeat_pkg_url: "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-{{heartbeat_version}}-{{ heartbeat_linux_arch }}"
+heartbeat_linux_arch: x86_64
+
+heartbeat_service_name: heartbeat-elastic
+
+heartbeat_config_dir: /etc/heartbeat
+heartbeat_config_file: heartbeat.yml
+
+# config
+
+heartbeat_config_name: heartbeat
+heartbeat_config_tags: ["observability", "heartbeat", "us-east-1"]
+
+heartbeat_config_logging_level: info
+heartbeat_config_monitoring_enabled: false
+
+heartbeat_config_output_elasticsearch_hosts: ["https://elasticsearch.example:9243"]
+heartbeat_config_output_elasticsearch_protocol: https
+heartbeat_config_output_elasticsearch_username: elastic
+heartbeat_config_output_elasticsearch_password: xxx
+
+heartbeat_config_monitors_path: "${path.config}/monitors.d/*.yml"
+heartbeat_config_reload_enabled: true
+heartbeat_config_reload_period: 5s
+
+heartbeat_monitors:
+  - type: http
+    name: google
+    timeout: 5s
+    schedule: '@every 10s'
+    urls:
+      - "https://www.google.com"
